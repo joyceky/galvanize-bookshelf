@@ -7,6 +7,7 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const app = express();
 
+
 app.disable('x-powered-by');
 
 const bodyParser = require('body-parser');
@@ -33,13 +34,13 @@ const path = require('path');
 app.use(express.static(path.join('public')));
 
 // CSRF protection
-app.use((req, res, next) => {
-  if (/json/.test(req.get('Accept'))) {
-    return next();
-  }
-
-  res.sendStatus(406);
-});
+// app.use((req, res, next) => {
+//   if (/json/.test(req.get('Accept'))) {
+//     return next();
+//   }
+//
+//   res.sendStatus(406);
+// });
 
 const books = require('./routes/books');
 const favorites = require('./routes/favorites');
