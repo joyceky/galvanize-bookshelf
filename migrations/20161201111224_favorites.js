@@ -8,6 +8,7 @@ exports.up = function(knex, Promise) {
       .references('id')
       .inTable('books')
       .onDelete('CASCADE');
+      
     table.integer('user_id')
       .notNullable()
       .references('id')
