@@ -11,7 +11,8 @@ const app = express();
 app.disable('x-powered-by');
 
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
+// const cookieSession = require('cookie-session');
 const morgan = require('morgan');
 
 switch (app.get('env')) {
@@ -55,6 +56,13 @@ app.use(users);
 app.use((_req, res) => {
   res.sendStatus(404);
 });
+
+// app.use(cookieSession({
+//   name: 'token',
+//   keys: ['supersecretkey'],
+//   // Cookie Options
+//   maxAge: 24 * 60 * 60 * 1000 // 24 hours
+// }));
 
 // eslint-disable-next-line max-params
 app.use((err, _req, res, _next) => {

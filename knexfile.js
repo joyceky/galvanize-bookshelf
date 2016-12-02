@@ -12,3 +12,20 @@ module.exports = {
 
   production: {}
 };
+
+//
+// module.exports = {
+//         client: 'pg',
+//         connection: {
+//             host: "xxxx.amazonaws.com",
+//             port: "xxxxx",
+//             user: "xxxxx",
+//             password: "xxxxx",
+//             database: "xxxxx",
+//             ssl: true
+//     },
+//         pool: {
+//             min: 1,
+//             max: 7
+//         }
+// };
