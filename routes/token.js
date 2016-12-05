@@ -32,30 +32,6 @@ router.get('/token', (req, res, next) => {
 // look for the sign method
 // also generate a cookie
 
-// router.post('/', function(req, res, next) {
-//   knex('users')
-//   .where('email', req.body.email)
-//   .first()
-//   .then(function(results) {
-//     if (!results) {
-//       throw boom.create(400, 'Bad email or password')
-//         } else {
-//         var user = results
-//             var passwordMatch = bcrypt.compareSync(req.body.password, user.hashed_password)
-//             if (passwordMatch === false) {
-//                 throw boom.create(400, 'Bad email or password')
-//             } else {
-//               delete user.hashed_password
-//               req.session.userId = user
-//               res.send(humps.camelizeKeys(user))
-//             }
-//     }
-//   })
-//   .catch((err) => {
-//     next(err);
-//   })
-// });
-
 // get the users id and password, then return encrypted
 router.post('/token', (req, res, next) => {
     let myUser;
