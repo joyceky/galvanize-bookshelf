@@ -67,41 +67,38 @@ router.post('/token', (req, res, next) => {
             .then(function(result) {
 
                 if (result.length === 0) {
-                  next(boom.create(400, 'Bad email or password'));
-                  return;
-                  }
-
-                else {
+                    next(boom.create(400, 'Bad email or password'));
+                    return;
+                } else {
                     myUser = result[0];
+                    return bcrypt.compare(req.body.password, myUser.hashed_password);
+                }
+            })
 
-                    // check passwork with bcrypt!
-                    bcrypt.compare(req.body.password, myUser.hashed_password)
-                        .then(function(match) {
+        .then(() => {
+            let myToken = generateToken(myUser);
+            res.cookie('token', myToken, {
+                httpOnly: true
+            });
 
-                          if(!match) {
-                            throw boom.create(400, 'Bad email or password');
-                          }
+            delete myUser.created_at;
+            delete myUser.updated_at;
+            delete myUser.hashed_password;
 
-                          else{
-                            let myToken = generateToken(myUser);
-                            res.cookie('token', myToken, {
-                                httpOnly: true
-                            });
+            authorizedFlag = true;
 
-                          delete myUser.created_at;
-                          delete myUser.updated_at;
-                          delete myUser.hashed_password;
+            myUser = humps.camelizeKeys(myUser);
 
-                          authorizedFlag = true;
+            res.status(200).send(myUser);
+        })
 
-                          myUser = humps.camelizeKeys(myUser);
-
-                          res.status(200).send(myUser);
-                          }
-                       });
-                      }
-                    });
-                  }
+        .catch(bcrypt.MISMATCH_ERROR, () => {
+                throw boom.create(400, 'Bad email or password');
+            })
+            .catch((err) => {
+                next(err);
+            });
+    }
 });
 
 router.get('/token', (req, res, next) => {
