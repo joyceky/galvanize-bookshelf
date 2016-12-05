@@ -106,7 +106,8 @@ router.get('/token', (req, res, next) => {
 });
 
 router.delete('/token', (req, res, next) => {
-
+  res.clearCookie('token');
+  res.send(true);
 });
 
 function generateToken(req) {
